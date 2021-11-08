@@ -22,4 +22,6 @@ public class CommandsApplication {
                 .apis(RequestHandlerSelectors.basePackage("systemarchitekturen_cqrs_commands.commands")).build();
     }
 
+    // http://localhost:8080/swagger-ui.html
+
 }
