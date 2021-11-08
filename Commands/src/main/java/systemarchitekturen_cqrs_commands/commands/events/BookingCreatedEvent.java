@@ -5,7 +5,6 @@ import java.util.Date;
 public class BookingCreatedEvent extends Event{
 
     private String bookingNr;
-    private int roomNr;
     private Date from;
     private Date to;
     private String firstName;
@@ -13,9 +12,8 @@ public class BookingCreatedEvent extends Event{
     private String phoneNr;
 
     public BookingCreatedEvent(String description, String bookingNr, int roomNr, Date from, Date to, String firstName, String lastName, String phoneNr) {
-        super(description);
+        super(description, roomNr);
         this.bookingNr = bookingNr;
-        this.roomNr = roomNr;
         this.from = from;
         this.to = to;
         this.firstName = firstName;
@@ -23,8 +21,29 @@ public class BookingCreatedEvent extends Event{
         this.phoneNr = phoneNr;
     }
 
-    public int getRoomNr() {
-        return roomNr;
+
+    public String getBookingNr() {
+        return bookingNr;
+    }
+
+    public Date getFrom() {
+        return from;
+    }
+
+    public Date getTo() {
+        return to;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNr() {
+        return phoneNr;
     }
 
     @Override
@@ -34,7 +53,7 @@ public class BookingCreatedEvent extends Event{
                 "eventId='" + this.getId() + '\'' +
                 "description='" + this.getDescription() + '\'' +
                 "bookingNr='" + bookingNr + '\'' +
-                ", roomNr=" + roomNr +
+                ", roomNr=" + this.getRoomNr() +
                 ", from=" + from +
                 ", to=" + to +
                 ", firstName='" + firstName + '\'' +

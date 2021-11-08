@@ -4,6 +4,7 @@ package systemarchitekturen_cqrs_commands.commands.controller;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import systemarchitekturen_cqrs_commands.commands.commandHandlers.BookCommandHandler;
+import systemarchitekturen_cqrs_commands.commands.commands.CancelBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.commands.CreateBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.repositories.EventRepository;
 
@@ -29,6 +30,16 @@ public class CommandsController {
         bookingCommandHandler.handleCreateBookingCommand(new CreateBookingCommand(roomNr, from, to, firstName, lastName, phoneNr));
 
         return "From: " + from + " To: " + to;
+    }
+
+    @PostMapping("/api/cancelBooking")
+    @ResponseBody
+    public String cancelBooking(@RequestParam String bookingNr
+                          ) {
+
+        bookingCommandHandler.handleCancelBookingCommand(new CancelBookingCommand(bookingNr));
+
+        return "Booking cancelled";
     }
 
     @GetMapping("/api/getEvents")

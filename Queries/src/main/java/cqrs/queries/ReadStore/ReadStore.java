@@ -13,13 +13,13 @@ public class ReadStore {
     }
 
     public void addRoomEntity(RoomEntity roomEntity){
-        rooms.add(roomEntity)
+        rooms.add(roomEntity);
     }
 
 
     public BookingEntity findBookingByReservationNr(String reservationNr){
         for (BookingEntity b : bookings){
-            if(b.reservationNr.equals(reservationNr)){
+            if(b.getReservationNr().equals(reservationNr)){
                 return b;
             }
         }

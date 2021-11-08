@@ -1,5 +1,10 @@
 package cqrs.queries.repository;
 
+import cqrs.queries.ReadStore.BookingEntity;
+import cqrs.queries.ReadStore.ReadStore;
+
+import java.util.Date;
+
 public class Projector {
 
     private ReadStore readStore;

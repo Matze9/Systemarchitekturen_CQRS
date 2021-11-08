@@ -1,8 +1,6 @@
 package cqrs.queries.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,11 +26,26 @@ public class HelloController {
             }
             in.close();
 
+            System.out.println("HEEEEEEE");
+
             return content.toString();
         } catch (Exception e){
             e.printStackTrace();
         }
 
         return "FAIL";
+    }
+
+    @PostMapping("/he")
+    @ResponseBody
+    public void sayHe(@RequestParam(value = "value1", defaultValue = "World") String value1, @RequestParam(value = "value2", defaultValue = "World") String value2) {
+
+        System.out.println("HEEE");
+        System.out.println(value1);
+        System.out.println(value2);
+
+
+
+
     }
 }

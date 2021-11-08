@@ -1,5 +1,7 @@
 package cqrs.queries.ReadStore;
 
+import java.util.Date;
+
 public class RoomEntity {
     private int roomNr;
     private int persons;
