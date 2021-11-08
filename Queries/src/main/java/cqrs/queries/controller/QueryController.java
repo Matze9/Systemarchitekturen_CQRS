@@ -9,6 +9,10 @@ public class QueryController {
 
 
 
+
+
     ///////////////Servicebus Controller//////////////
+
+
 
 }
