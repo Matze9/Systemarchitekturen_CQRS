@@ -3,7 +3,7 @@ package systemarchitekturen_cqrs_commands.commands.controller;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import systemarchitekturen_cqrs_commands.commands.commandHandlers.BookingCommandHandler;
+import systemarchitekturen_cqrs_commands.commands.commandHandlers.BookCommandHandler;
 import systemarchitekturen_cqrs_commands.commands.commands.CreateBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.repositories.EventRepository;
 
@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class CommandsController {
 
     EventRepository eventRepository = new EventRepository();
-    BookingCommandHandler bookingCommandHandler = new BookingCommandHandler(eventRepository);
+    BookCommandHandler bookingCommandHandler = new BookCommandHandler(eventRepository);
 
 
     @PostMapping("/api/createBooking")
