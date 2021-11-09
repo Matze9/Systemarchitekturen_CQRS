@@ -80,6 +80,18 @@ public class BookCommandHandler {
 
     public void handleBookingCancelledEvent (BookingCancelledEvent bookingCancelledEvent){
 
+        webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/handleBookingCancelledEvent")
+                        .queryParam("reservationNr", bookingCancelledEvent.getBookingNr())
+                        .build())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+
         eventRepository.addEvent(bookingCancelledEvent);
 
     }

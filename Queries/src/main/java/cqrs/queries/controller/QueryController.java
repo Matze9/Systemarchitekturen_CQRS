@@ -2,8 +2,9 @@ package cqrs.queries.controller;
 
 import cqrs.queries.DTOs.BookingDTO;
 import cqrs.queries.DTOs.RoomDTO;
-import cqrs.queries.ReadStore.ReadStore;
-import cqrs.queries.repository.ReadRepositoryImpl;
+import cqrs.queries.controller.repository_v2.Projector;
+import cqrs.queries.controller.repository_v2.ReadRepositoryImpl;
+import cqrs.queries.readStore_v2.ReadStore;
 import cqrs.queries.services.ReadServices;
 import cqrs.queries.services.ReadServicesImpl;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +19,7 @@ public class QueryController {
     ReadStore readStore = new ReadStore();
     ReadRepositoryImpl repository = new ReadRepositoryImpl(readStore);
     ReadServices readServices = new ReadServicesImpl(repository);
-    // Projector projector = new Projector(readStore);
+     Projector projector = new Projector(repository);
 
     @GetMapping("/api/getFreeRooms")
     @ResponseBody
@@ -26,12 +27,8 @@ public class QueryController {
                                   @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") Date to,
                                   @RequestParam int numberOfPersons) {
 
-        RoomDTO roomDTO = new RoomDTO(5, 2);
-        LinkedList<RoomDTO> rooms = readServices.getRooms(from, to, numberOfPersons);
-        rooms.add(roomDTO);
 
-
-
+        LinkedList<RoomDTO> rooms = readServices.getFreeRooms(from, to, numberOfPersons);
         RoomDTO[] roomDTOS = rooms.toArray(new RoomDTO[rooms.size()]);
 
         return roomDTOS;
@@ -44,6 +41,8 @@ public class QueryController {
 
         LinkedList<BookingDTO> bookings = readServices.getBookingsBetween(from, to);
         BookingDTO[] bookingDTOs = bookings.toArray(new BookingDTO[bookings.size()]);
+
+        System.out.println("Got bookings: " + bookings);
 
         return bookingDTOs;
     }
@@ -71,7 +70,7 @@ public class QueryController {
                 " firstName: " + firstName +
                 " lastName: " + lastName);
 
-        // projector.projectBookingCreatedEvent(...)
+        projector.projectBookingCreatedEvent(reservationNr, roomNr, from, to, 5, firstName, lastName);
 
     }
 
@@ -81,7 +80,9 @@ public class QueryController {
 
         System.out.println("Cancel Booking: " + reservationNr);
 
-        // projector.projectBookingCancelledEvent(...)
+        projector.projectBookingCancelled(reservationNr);
+
+
 
     }
 

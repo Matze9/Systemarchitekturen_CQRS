@@ -10,6 +10,6 @@ public interface ReadServices {
 
     LinkedList<BookingDTO> getBookingsBetween(Date from, Date to);
 
-    LinkedList<RoomDTO> getRooms(Date from, Date to, int numberOfPersons);
+    LinkedList<RoomDTO> getFreeRooms(Date from, Date to, int numberOfPersons);
 
 }
