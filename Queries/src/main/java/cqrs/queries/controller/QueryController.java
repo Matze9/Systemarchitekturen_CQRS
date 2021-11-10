@@ -56,7 +56,6 @@ public class QueryController {
     public void handleBookingCreatedEvent(@RequestParam (value = "reservationNr") String reservationNr,
                                           @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") Date from,
                                           @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") Date to,
-
                                           @RequestParam (value = "roomNr") int roomNr,
                                           @RequestParam (value = "firstName") String firstName,
                                           @RequestParam (value = "lastName") String lastName) {

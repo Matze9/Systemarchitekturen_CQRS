@@ -16,7 +16,7 @@ public class Projector {
 
 
     public void projectBookingCreatedEvent(String reservationNr, int roomNr, Date from, Date to, int numOfPersons, String fname, String lname ){
-        System.out.println("I am Projecting!");
+
         readRepository.addBooking(reservationNr, roomNr, from, to, numOfPersons, fname, lname);
     }
 
