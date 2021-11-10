@@ -60,11 +60,15 @@ public class EventRepository {
         Iterator<Event> iter = events.iterator();
         while (iter.hasNext()) {
             Event event = iter.next();
-            if ((from.after(((BookingCreatedEvent) event).getFrom()) && from.before(((BookingCreatedEvent) event).getTo()))
-                    || from.compareTo(((BookingCreatedEvent) event).getFrom()) == 0
-                    || to.after(((BookingCreatedEvent) event).getFrom()) && to.before(((BookingCreatedEvent) event).getTo())){
-                if(event.getRoomNr() == roomNr){
-                    return false;
+            if(event instanceof BookingCreatedEvent) {
+                if ((from.after(((BookingCreatedEvent) event).getFrom()) && from.before(((BookingCreatedEvent) event).getTo()))
+                        || from.compareTo(((BookingCreatedEvent) event).getFrom()) == 0
+                        || to.after(((BookingCreatedEvent) event).getFrom()) && to.before(((BookingCreatedEvent) event).getTo())) {
+                    if (event.getRoomNr() == roomNr) {
+                        if (!(checkIfBookingIsCancelled(event.getBookingNr()))) {
+                            return false;
+                        }
+                    }
                 }
             }
         }

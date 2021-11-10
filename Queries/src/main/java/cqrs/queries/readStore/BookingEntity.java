@@ -1,4 +1,4 @@
-package cqrs.queries.readStore_v2;
+package cqrs.queries.readStore;
 
 import java.util.Date;
 

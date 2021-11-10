@@ -2,9 +2,10 @@ package cqrs.queries.controller;
 
 import cqrs.queries.DTOs.BookingDTO;
 import cqrs.queries.DTOs.RoomDTO;
-import cqrs.queries.controller.repository_v2.Projector;
-import cqrs.queries.controller.repository_v2.ReadRepositoryImpl;
-import cqrs.queries.readStore_v2.ReadStore;
+
+import cqrs.queries.readStore.ReadStore;
+import cqrs.queries.repository_v2.Projector;
+import cqrs.queries.repository_v2.ReadRepository;
 import cqrs.queries.services.ReadServices;
 import cqrs.queries.services.ReadServicesImpl;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,7 +18,7 @@ import java.util.LinkedList;
 public class QueryController {
 
     ReadStore readStore = new ReadStore();
-    ReadRepositoryImpl repository = new ReadRepositoryImpl(readStore);
+    ReadRepository repository = new ReadRepository(readStore);
     ReadServices readServices = new ReadServicesImpl(repository);
      Projector projector = new Projector(repository);
 
@@ -42,8 +43,6 @@ public class QueryController {
         LinkedList<BookingDTO> bookings = readServices.getBookingsBetween(from, to);
         BookingDTO[] bookingDTOs = bookings.toArray(new BookingDTO[bookings.size()]);
 
-        System.out.println("Got bookings: " + bookings);
-
         return bookingDTOs;
     }
 
@@ -62,14 +61,6 @@ public class QueryController {
                                           @RequestParam (value = "firstName") String firstName,
                                           @RequestParam (value = "lastName") String lastName) {
 
-        System.out.println("ReservationNr: " + reservationNr +
-                " From: " + from +
-                " To: " + to +
-
-                " roomNr: " + roomNr +
-                " firstName: " + firstName +
-                " lastName: " + lastName);
-
         projector.projectBookingCreatedEvent(reservationNr, roomNr, from, to, 5, firstName, lastName);
 
     }
@@ -78,11 +69,7 @@ public class QueryController {
     @ResponseBody
     public void handleBookingCancelledEvent(@RequestParam (value = "reservationNr") String reservationNr) {
 
-        System.out.println("Cancel Booking: " + reservationNr);
-
         projector.projectBookingCancelled(reservationNr);
-
-
 
     }
 

@@ -2,15 +2,15 @@ package cqrs.queries.services;
 
 import cqrs.queries.DTOs.BookingDTO;
 import cqrs.queries.DTOs.RoomDTO;
-import cqrs.queries.controller.repository_v2.ReadRepositoryImpl;
+import cqrs.queries.repository_v2.ReadRepository;
 
 import java.util.Date;
 import java.util.LinkedList;
 
 public class ReadServicesImpl implements ReadServices{
-    ReadRepositoryImpl repository;
+    ReadRepository repository;
 
-    public ReadServicesImpl (ReadRepositoryImpl repository){
+    public ReadServicesImpl (ReadRepository repository){
         this.repository = repository;
     }
 

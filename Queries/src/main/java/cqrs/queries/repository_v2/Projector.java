@@ -1,9 +1,6 @@
-package cqrs.queries.controller.repository_v2;
+package cqrs.queries.repository_v2;
 
 
-
-import cqrs.queries.readStore_v2.BookingEntity;
-import cqrs.queries.readStore_v2.ReadStore;
 
 import java.util.Date;
 
@@ -11,9 +8,9 @@ public class Projector {
 
 
 
-    private ReadRepositoryImpl readRepository;
+    private ReadRepository readRepository;
 
-    public Projector(ReadRepositoryImpl readRepository){
+    public Projector(ReadRepository readRepository){
         this.readRepository = readRepository;
     }
 

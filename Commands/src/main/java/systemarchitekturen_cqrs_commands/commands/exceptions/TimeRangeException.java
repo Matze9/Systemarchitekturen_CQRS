@@ -1,4 +1,4 @@
-package systemarchitekturen_cqrs_commands.commands.commandHandlers.exceptions;
+package systemarchitekturen_cqrs_commands.commands.exceptions;
 
 public class TimeRangeException extends Exception{
 

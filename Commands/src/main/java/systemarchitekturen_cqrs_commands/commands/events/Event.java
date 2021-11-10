@@ -9,10 +9,12 @@ public abstract class Event {
     private final Date created = new Date();
     private String description;
     private int roomNr;
+    private String bookingNr;
 
-    public Event(String description, int roomNr) {
+    public Event(String description, int roomNr, String bookingNr) {
         this.description = description;
         this.roomNr = roomNr;
+        this.bookingNr = bookingNr;
     }
 
     public UUID getId() {
@@ -29,5 +31,9 @@ public abstract class Event {
 
     public int getRoomNr() {
         return roomNr;
+    }
+
+    public String getBookingNr() {
+        return bookingNr;
     }
 }

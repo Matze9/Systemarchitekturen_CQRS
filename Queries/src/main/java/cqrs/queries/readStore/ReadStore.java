@@ -1,4 +1,4 @@
-package cqrs.queries.readStore_v2;
+package cqrs.queries.readStore;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -24,17 +24,13 @@ public class ReadStore {
 
     public LinkedList<BookingEntity> getBookingsBetween (Date from, Date to){
 
-        System.out.println("Look for bookings between: " + from + "and " + to);
-        System.out.println("Readstore looks in: " + bookings);
         LinkedList<BookingEntity> bookingEntities = new LinkedList<>();
         bookings.forEach(bookingEntity -> {
-            System.out.println("Check entity: " + bookingEntity);
             if(from.before(bookingEntity.getFrom()) && to.after(bookingEntity.getTo())){
 
                 bookingEntities.add(bookingEntity);
             }
         });
-        System.out.println("Readstore returns: " + bookingEntities);
         return bookingEntities;
     }
 
@@ -59,18 +55,15 @@ public class ReadStore {
             if(rooms.get(i).getRoomNr() == bookingEntity.getRoomNr()) {
                 rooms.get(i).addBooking(bookingEntity);
                 bookings.add(bookingEntity);
-                System.out.println("Readstore added booking!");
             }
 
         }
     }
 
     public void cancelBooking(String bookingNr){
-        System.out.println("ReadStore cancel booking: " + bookingNr);
         for(int i = 0; i < bookings.size(); i++)
         {
             if(bookings.get(i).getBookingNr().equals(bookingNr)) {
-                System.out.println("Readstore found booking!");
                 bookings.get(i).cancel();
             }
 

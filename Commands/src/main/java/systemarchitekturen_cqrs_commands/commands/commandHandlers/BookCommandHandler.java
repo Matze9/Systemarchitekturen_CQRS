@@ -2,9 +2,9 @@ package systemarchitekturen_cqrs_commands.commands.commandHandlers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import systemarchitekturen_cqrs_commands.commands.commandHandlers.exceptions.AlreadyCancelledException;
-import systemarchitekturen_cqrs_commands.commands.commandHandlers.exceptions.InvalidDatesException;
-import systemarchitekturen_cqrs_commands.commands.commandHandlers.exceptions.TimeRangeException;
+import systemarchitekturen_cqrs_commands.commands.exceptions.AlreadyCancelledException;
+import systemarchitekturen_cqrs_commands.commands.exceptions.InvalidDatesException;
+import systemarchitekturen_cqrs_commands.commands.exceptions.TimeRangeException;
 import systemarchitekturen_cqrs_commands.commands.commands.CancelBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.commands.CreateBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.events.BookingCancelledEvent;
