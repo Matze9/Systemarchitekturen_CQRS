@@ -32,8 +32,8 @@ public class ReadRepositoryImpl {
         System.out.println("Repository activated!");
         LinkedList<BookingEntity> entities = readStore.getBookingsBetween(from, to);
         LinkedList<BookingDTO> dtos = new LinkedList<>();
-        entities.forEach(entitie -> {
-            dtos.add(new BookingDTO(entitie.getBookingNr(), entitie.getRoomNr(), entitie.getFrom(), entitie.getTo(), entitie.getFirstName(), entitie.getLastName()));
+        entities.forEach(entity -> {
+            dtos.add(new BookingDTO(entity.getBookingNr(), entity.getRoomNr(), entity.getFrom(), entity.getTo(), entity.getFirstName(), entity.getLastName(), entity.getState()));
         });
         System.out.println("Repository got: " + entities);
         System.out.println("Repository returns: " + dtos);

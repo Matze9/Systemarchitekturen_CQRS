@@ -59,9 +59,9 @@ public class ReadStore {
             if(rooms.get(i).getRoomNr() == bookingEntity.getRoomNr()) {
                 rooms.get(i).addBooking(bookingEntity);
                 bookings.add(bookingEntity);
+                System.out.println("Readstore added booking!");
             }
 
-            break;
         }
     }
 
@@ -69,9 +69,10 @@ public class ReadStore {
         System.out.println("ReadStore cancel booking: " + bookingNr);
         for(int i = 0; i < bookings.size(); i++)
         {
-            if(bookings.get(i).getBookingNr().equals(bookingNr))
+            if(bookings.get(i).getBookingNr().equals(bookingNr)) {
                 System.out.println("Readstore found booking!");
                 bookings.get(i).cancel();
+            }
 
         }
 

@@ -11,7 +11,7 @@ public class BookingCancelledEvent extends Event {
 
     @Override
     public String toString (){
-        return "BookingCreatedEvent{" +
+        return "BookingCancelledEvent{" +
                 "eventId='" + this.getId() + '\'' +
                 "description='" + this.getDescription() + '\'' +
                 "bookingNr='" + bookingNr + '\'' +

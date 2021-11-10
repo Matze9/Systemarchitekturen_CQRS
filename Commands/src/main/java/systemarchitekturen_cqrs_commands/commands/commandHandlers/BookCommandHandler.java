@@ -2,6 +2,9 @@ package systemarchitekturen_cqrs_commands.commands.commandHandlers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import systemarchitekturen_cqrs_commands.commands.commandHandlers.exceptions.AlreadyCancelledException;
+import systemarchitekturen_cqrs_commands.commands.commandHandlers.exceptions.InvalidDatesException;
+import systemarchitekturen_cqrs_commands.commands.commandHandlers.exceptions.TimeRangeException;
 import systemarchitekturen_cqrs_commands.commands.commands.CancelBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.commands.CreateBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.events.BookingCancelledEvent;
@@ -22,18 +25,22 @@ public class BookCommandHandler {
         this.eventRepository = eventRepository;
     }
 
-    public void handleCreateBookingCommand (CreateBookingCommand command){
+    public String handleCreateBookingCommand (CreateBookingCommand command) throws TimeRangeException, InvalidDatesException {
+
+        if (command.getFrom().after(command.getTo())) throw new InvalidDatesException();
 
         //Validate Command (Check if Booking in Timerange is possible)
         if(eventRepository.checkIfBookingIsPossible(command.getFrom(), command.getTo(), command.getRoomNr())) {
-            UUID bookingNr = UUID.randomUUID();
-            this.handleCreateBookingEvent(new BookingCreatedEvent("New booking created", bookingNr.toString(), command.getRoomNr(), command.getFrom(), command.getTo(), command.getFirstName(), command.getLastName(), command.getPhoneNr()));
+            String bookingNr = UUID.randomUUID().toString();
+
+            this.handleCreateBookingEvent(new BookingCreatedEvent("New booking created", bookingNr, command.getRoomNr(), command.getFrom(), command.getTo(), command.getFirstName(), command.getLastName(), command.getPhoneNr()));
+            return bookingNr;
         } else {
-            System.out.println("Booking in Timerange not possible!");
+            throw new TimeRangeException();
         }
     }
 
-    public void handleCancelBookingCommand (CancelBookingCommand cancelBookingCommand){
+    public void handleCancelBookingCommand (CancelBookingCommand cancelBookingCommand) throws AlreadyCancelledException {
 
         int roomNr = eventRepository.getRoomNrOfBooking(cancelBookingCommand.getBookingNr());
 
@@ -41,10 +48,8 @@ public class BookCommandHandler {
             if(!eventRepository.checkIfBookingIsCancelled(cancelBookingCommand.getBookingNr())) {
                 this.handleBookingCancelledEvent(new BookingCancelledEvent(cancelBookingCommand.getBookingNr(), roomNr));
             } else {
-                System.out.println("Booking is already cancelled!");
+                throw new AlreadyCancelledException();
             }
-        } else {
-            System.out.println("Room does not exist!");
         }
     }
 
@@ -57,10 +62,9 @@ public class BookCommandHandler {
         webClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/api/handleBookingCreatedEvent")
-                        .queryParam("reservationNr", bookingCreatedEvent.getId().toString())
-                        .queryParam("from", from.toString())
-                        .queryParam("to", to.toString())
-
+                        .queryParam("reservationNr", bookingCreatedEvent.getBookingNr())
+                        .queryParam("from", from)
+                        .queryParam("to", to)
                         .queryParam("roomNr", bookingCreatedEvent.getRoomNr())
                         .queryParam("firstName", bookingCreatedEvent.getFirstName())
                         .queryParam("lastName", bookingCreatedEvent.getLastName())
@@ -71,9 +75,6 @@ public class BookCommandHandler {
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
-
-        System.out.println("CommandsApp Eventhandler!");
-
 
         eventRepository.addEvent(bookingCreatedEvent);
     }
