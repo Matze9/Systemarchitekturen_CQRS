@@ -6,6 +6,7 @@ import cqrs.queries.DTOs.RoomDTO;
 import cqrs.queries.readStore.ReadStore;
 import cqrs.queries.repository_v2.Projector;
 import cqrs.queries.repository_v2.ReadRepository;
+import cqrs.queries.repository_v2.ReadRepositoryImpl;
 import cqrs.queries.services.ReadServices;
 import cqrs.queries.services.ReadServicesImpl;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +19,7 @@ import java.util.LinkedList;
 public class QueryController {
 
     ReadStore readStore = new ReadStore();
-    ReadRepository repository = new ReadRepository(readStore);
+    ReadRepository repository = new ReadRepositoryImpl(readStore);
     ReadServices readServices = new ReadServicesImpl(repository);
      Projector projector = new Projector(repository);
 

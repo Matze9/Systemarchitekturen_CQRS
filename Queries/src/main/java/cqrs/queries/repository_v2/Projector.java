@@ -10,19 +10,19 @@ public class Projector {
 
 
 
-    private ReadRepository readRepository;
+    private ReadRepository readRepositoryImpl;
 
-    public Projector(ReadRepository readRepository){
-        this.readRepository = readRepository;
+    public Projector(ReadRepository readRepositoryImpl){
+        this.readRepositoryImpl = readRepositoryImpl;
     }
 
 
     public void projectBookingCreatedEvent(String reservationNr, int roomNr, Date from, Date to, int numOfPersons, String fname, String lname ){
-        readRepository.addBooking(new BookingEntity(reservationNr, roomNr, from, to, fname, lname));
+        readRepositoryImpl.addBooking(new BookingEntity(reservationNr, roomNr, from, to, fname, lname));
     }
 
     public void projectBookingCancelled(String reservationNr){
-        readRepository.cancelBooking(reservationNr);
+        readRepositoryImpl.cancelBooking(reservationNr);
 
     }
 }

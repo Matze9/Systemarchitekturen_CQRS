@@ -3,6 +3,7 @@ package cqrs.queries.services;
 import cqrs.queries.DTOs.BookingDTO;
 import cqrs.queries.DTOs.RoomDTO;
 import cqrs.queries.repository_v2.ReadRepository;
+import cqrs.queries.repository_v2.ReadRepositoryImpl;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -16,7 +17,6 @@ public class ReadServicesImpl implements ReadServices{
 
     @Override
     public LinkedList<BookingDTO> getBookingsBetween(Date from, Date to) {
-        System.out.println("Readservice activated");
         return repository.getBookingsBetween(from, to);
     }
 

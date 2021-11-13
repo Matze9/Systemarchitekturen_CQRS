@@ -53,7 +53,7 @@ public class BookingEntity {
     }
 
     public void cancel (){
-        System.out.println("Cancel booking: " + this);
+
         this.state = "cancelled";
     }
 
