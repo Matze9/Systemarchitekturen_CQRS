@@ -4,12 +4,13 @@ package systemarchitekturen_cqrs_commands.commands.controller;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import systemarchitekturen_cqrs_commands.commands.commandHandlers.BookCommandHandler;
+import systemarchitekturen_cqrs_commands.commands.commandHandlers.BookCommandHandlerImpl;
 import systemarchitekturen_cqrs_commands.commands.exceptions.AlreadyCancelledException;
 import systemarchitekturen_cqrs_commands.commands.exceptions.InvalidDatesException;
 import systemarchitekturen_cqrs_commands.commands.exceptions.TimeRangeException;
 import systemarchitekturen_cqrs_commands.commands.commands.CancelBookingCommand;
 import systemarchitekturen_cqrs_commands.commands.commands.CreateBookingCommand;
-import systemarchitekturen_cqrs_commands.commands.repositories.EventRepository;
+import systemarchitekturen_cqrs_commands.commands.repositories.EventRepositoryImpl;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -17,8 +18,8 @@ import java.util.LinkedList;
 @RestController
 public class CommandsController {
 
-    EventRepository eventRepository = new EventRepository();
-    BookCommandHandler bookingCommandHandler = new BookCommandHandler(eventRepository);
+    EventRepositoryImpl eventRepositoryImpl = new EventRepositoryImpl();
+    BookCommandHandler bookingCommandHandler = new BookCommandHandlerImpl(eventRepositoryImpl);
 
 
     @PostMapping("/api/createBooking")
@@ -57,7 +58,7 @@ public class CommandsController {
     @ResponseBody
     public String[] getEvents(@RequestParam int roomNr) {
 
-        LinkedList<String> eventList = eventRepository.getRoomEvents(roomNr);
+        LinkedList<String> eventList = eventRepositoryImpl.getRoomEvents(roomNr);
 
         String[] eventArr = eventList.toArray(new String[eventList.size()]);
 
