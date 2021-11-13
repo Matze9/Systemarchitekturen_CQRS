@@ -2,6 +2,8 @@ package cqrs.queries.repository_v2;
 
 
 
+import cqrs.queries.readStore.BookingEntity;
+
 import java.util.Date;
 
 public class Projector {
@@ -16,8 +18,7 @@ public class Projector {
 
 
     public void projectBookingCreatedEvent(String reservationNr, int roomNr, Date from, Date to, int numOfPersons, String fname, String lname ){
-
-        readRepository.addBooking(reservationNr, roomNr, from, to, numOfPersons, fname, lname);
+        readRepository.addBooking(new BookingEntity(reservationNr, roomNr, from, to, fname, lname));
     }
 
     public void projectBookingCancelled(String reservationNr){

@@ -19,8 +19,8 @@ public class ReadRepository {
         this.readStore = readStore;
     }
 
-    public void addBooking(String reservationNr, int roomNr, Date from, Date to, int numOfPersons, String fname, String lname ){
-        readStore.addBookingEntity(new BookingEntity(reservationNr, roomNr, from, to, fname, lname));
+    public void addBooking(BookingEntity bookingEntity ){
+        readStore.addBookingEntity(bookingEntity);
     }
 
     public void cancelBooking (String bookingNr){
